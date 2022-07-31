@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react'
 import { Card, CardContent, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
+import Cookies from 'js-cookie'
 
 import { Layout } from '../components/layouts'
 
@@ -9,6 +10,8 @@ const ThemeChangerPage = () => {
         const selectedTheme = event.target.value
         console.log({ selectedTheme })
         setCurrentThem(selectedTheme)
+        localStorage.setItem('theme', selectedTheme)
+        Cookies.set('theme', selectedTheme)
     }
 
     return (
