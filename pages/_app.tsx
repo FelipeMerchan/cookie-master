@@ -1,4 +1,6 @@
-import type { AppContext, AppProps } from 'next/app'
+import { useEffect, useState } from 'react'
+import type { AppProps } from 'next/app'
+import Cookies from 'js-cookie'
 import { CssBaseline, Theme, ThemeProvider } from '@mui/material'
 
 import { customTheme, darkTheme, lightTheme } from '../themes'
@@ -9,11 +11,19 @@ interface Props extends AppProps {
 }
 
 function MyApp({ Component, pageProps, theme = 'dark' }: Props) {
-  const currentTheme: Theme = theme === 'light'
-    ? lightTheme
-    : (theme === 'dark')
-      ? darkTheme
-      : customTheme
+  const [currentTheme, setcurrentTheme] = useState(lightTheme)
+
+  useEffect(() => {
+    const cookieTheme = Cookies.get('theme') || 'light'
+    const selectedTheme: Theme = cookieTheme === 'light'
+      ? lightTheme
+      : (cookieTheme === 'dark')
+        ? darkTheme
+        : customTheme
+
+    setcurrentTheme(selectedTheme)
+  }, [])
+  
 
   return (
     <ThemeProvider theme={currentTheme}>
